@@ -7,34 +7,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $group      = trim($_POST["group"]);
 
     if ($student_id === "" || $fullname === "" || $group === "") {
-        echo "Erreur : tous les champs sont obligatoires.";
-        exit;
-    }
-
-    $file = "students.json";
-    if (file_exists($file)) {
-        $students = json_decode(file_get_contents($file), true);
+        $error = "Erreur : tous les champs sont obligatoires.";
     } else {
-        $students = [];
+        $file = "students.json";
+        if (file_exists($file)) {
+            $students = json_decode(file_get_contents($file), true);
+        } else {
+            $students = [];
+        }
+
+        $students[] = [
+            "id" => $student_id,
+            "fullname" => $fullname,
+            "group" => $group
+        ];
+
+        file_put_contents($file, json_encode($students, JSON_PRETTY_PRINT));
+
+        $success = "Étudiant ajouté avec succès !";
     }
-
-    $students[] = [
-        "id" => $student_id,
-        "fullname" => $fullname,
-        "group" => $group
-    ];
-
-    file_put_contents($file, json_encode($students, JSON_PRETTY_PRINT));
-
-    echo "<h2>Étudiant ajouté avec succès !</h2>";
-    echo "<a href='/Attendance/list_student.php'>
-            <button style='padding:10px 15px;'>Voir la liste</button>
-          </a>";
-    exit;
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un étudiant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
 <h2>Ajouter un étudiant</h2>
+
+<?php
+if (!empty($error)) {
+    echo "<p style='color:red;'>$error</p>";
+}
+if (!empty($success)) {
+    echo "<p style='color:green;'>$success</p>";
+    echo "<a href='/Attendance/list_student.php'><button>Voir la liste</button></a>";
+}
+?>
+
 <form method="POST">
     <label>ID Étudiant :</label><br>
     <input type="text" name="student_id" required><br><br>
@@ -45,11 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label>Groupe :</label><br>
     <input type="text" name="group" required><br><br>
 
-    <button type="submit" style="padding:10px 15px;">Ajouter</button>
+    <button type="submit">Ajouter</button>
 </form>
 
 <br>
 <a href="/Attendance/list_student.php">
-    <button style="padding:10px 15px;">Voir la liste</button>
+    <button>Voir la liste</button>
 </a>
 
+</body>
+</html>
