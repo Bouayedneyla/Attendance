@@ -8,6 +8,9 @@ if (file_exists($fileName)) {
     echo "<h2>Attendance for today has already been taken.</h2>";
     echo "<a href='/Attendance/list_student.php'>
             <button style='padding:10px 15px;'>Retour à la liste des étudiants</button>
+          </a> ";
+    echo "<a href='/Attendance/update_attendance.php?date=$today'>
+            <button style='padding:10px 15px;'>Modifier l'attendance</button>
           </a>";
     exit;
 }
@@ -42,6 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<h2>Attendance saved successfully for $today.</h2>";
     echo "<a href='/Attendance/list_student.php'>
             <button style='padding:10px 15px;'>Retour à la liste des étudiants</button>
+          </a> ";
+    echo "<a href='/Attendance/update_attendance.php?date=$today'>
+            <button style='padding:10px 15px;'>Modifier l'attendance</button>
           </a>";
     exit;
 }
