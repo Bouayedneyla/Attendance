@@ -22,4 +22,4 @@ if ($session_id) {
 }
 ?>
 
-<br><a href="list_sessions.php">Back to sessions</a>
+<br><a href="list_session.php">Back to sessions</a>
