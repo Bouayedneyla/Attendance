@@ -37,6 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="navbar">
+    <a href="/Attendance/add_student.php">Ajouter étudiant</a>
+    <a href="/Attendance/list_student.php">Liste étudiants</a>
+    <a href="/Attendance/take_attendance.php">Prendre présence</a>
+</div>
+
 
 <h2>Ajouter un étudiant</h2>
 
